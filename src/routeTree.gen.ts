@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as StoryRouteImport } from './routes/story'
 import { Route as VisitRouteImport } from './routes/visit'
@@ -17,6 +18,11 @@ import { Route as VisitRouteImport } from './routes/visit'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -37,12 +43,14 @@ const VisitRoute = VisitRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
   '/menu': typeof MenuRoute
   '/story': typeof StoryRoute
   '/visit': typeof VisitRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
   '/menu': typeof MenuRoute
   '/story': typeof StoryRoute
   '/visit': typeof VisitRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
   '/menu': typeof MenuRoute
   '/story': typeof StoryRoute
   '/visit': typeof VisitRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/menu' | '/story' | '/visit'
+  fullPaths: '/' | '/book' | '/menu' | '/story' | '/visit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/menu' | '/story' | '/visit'
-  id: '__root__' | '/' | '/menu' | '/story' | '/visit'
+  to: '/' | '/book' | '/menu' | '/story' | '/visit'
+  id: '__root__' | '/' | '/book' | '/menu' | '/story' | '/visit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookRoute: typeof BookRoute
   MenuRoute: typeof MenuRoute
   StoryRoute: typeof StoryRoute
   VisitRoute: typeof VisitRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookRoute: BookRoute,
   MenuRoute: MenuRoute,
   StoryRoute: StoryRoute,
   VisitRoute: VisitRoute,
