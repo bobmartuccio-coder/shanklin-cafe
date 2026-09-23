@@ -6,4 +6,4 @@
 - [x] Story page
 - [x] Visit page
 - [x] Three-step booking flow
-- [ ] Responsive and interaction verification
+- [x] Responsive and interaction verification
